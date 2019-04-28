@@ -1,0 +1,20 @@
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  width: 625px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.block {
+  background-color: #cccccc;
+  width: 25px;
+  height: 25px;
+  border: 2px solid white;
+}
