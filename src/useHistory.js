@@ -15,6 +15,11 @@ const reducer = (prevState, action) => {
         future: [...prevState.future, prevState.present]
       }
     case 'REDO':
+      return {
+        past: [...prevState.past, prevState.present],
+        present: prevState.future[prevState.future.length - 1],
+        future: prevState.future.slice(0, prevState.future.length - 1)
+      }
     case 'SET':
       return {
         past: [...prevState.past, prevState.present],
@@ -39,5 +44,11 @@ export const useHistory = initPresent => {
 
   const canUndo = state.past.length > 0
 
-  return { present: state.present, setPresent, undo, canUndo }
+  const redo = () => {
+    dispatch({ type: 'REDO' })
+  }
+
+  const canRedo = state.future.length > 0
+
+  return { present: state.present, setPresent, undo, canUndo, redo, canRedo }
 }
