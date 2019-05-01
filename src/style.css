@@ -18,3 +18,7 @@
   height: 25px;
   border: 2px solid white;
 }
+
+.active {
+  background-color: #333333;
+}
