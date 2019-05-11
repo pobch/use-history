@@ -6,17 +6,19 @@ import { useHistory } from './useHistory'
 const initValue = Array(625).fill(false)
 
 function App() {
-  const { present, setPresent, undo, canUndo, redo, canRedo } = useHistory(initValue)
+  const { present, setPresent, undo, canUndo, redo, canRedo, reset } = useHistory(initValue)
   return (
     <div className="container">
       <div>
-        <button onClick={undo} disabled={!canUndo}>
+        <button className="btn" onClick={undo} disabled={!canUndo}>
           Undo
         </button>
-        <button onClick={redo} disabled={!canRedo}>
+        <button className="btn" onClick={redo} disabled={!canRedo}>
           Redo
         </button>
-        <button>Reset</button>
+        <button className="btn" onClick={reset}>
+          Reset
+        </button>
       </div>
       <div className="grid">
         {(() => {

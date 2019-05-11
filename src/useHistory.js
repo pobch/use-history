@@ -26,6 +26,8 @@ const reducer = (prevState, action) => {
         present: action.newPresent,
         future: []
       }
+    case 'RESET':
+      return action.payload
     default:
       throw new Error()
   }
@@ -34,21 +36,28 @@ const reducer = (prevState, action) => {
 export const useHistory = initPresent => {
   const [state, dispatch] = useReducer(reducer, { ...initialState, present: initPresent })
 
+  const canUndo = state.past.length > 0
+  const canRedo = state.future.length > 0
+
   const setPresent = newPresent => {
     dispatch({ type: 'SET', newPresent })
   }
 
   const undo = () => {
-    dispatch({ type: 'UNDO' })
+    if (canUndo) {
+      dispatch({ type: 'UNDO' })
+    }
   }
-
-  const canUndo = state.past.length > 0
 
   const redo = () => {
-    dispatch({ type: 'REDO' })
+    if (canRedo) {
+      dispatch({ type: 'REDO' })
+    }
   }
 
-  const canRedo = state.future.length > 0
+  const reset = () => {
+    dispatch({ type: 'RESET', payload: { ...initialState, present: initPresent } })
+  }
 
-  return { present: state.present, setPresent, undo, canUndo, redo, canRedo }
+  return { present: state.present, setPresent, undo, canUndo, redo, canRedo, reset }
 }
